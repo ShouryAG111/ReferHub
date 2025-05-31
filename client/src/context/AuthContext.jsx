@@ -5,7 +5,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || "https://referhub.onrender.com"
+axios.defaults.baseURL = "https://referhub.onrender.com"
 
 const AuthContext = createContext()
 
