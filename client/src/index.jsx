@@ -5,7 +5,7 @@ import App from "./App"
 import axios from "axios"
 
 // Set base URL for axios - make sure this matches your server port
-axios.defaults.baseURL = "http://localhost:8000"
+axios.defaults.baseURL = "https://referhub.onrender.com"
 
 // Set default headers
 axios.defaults.headers.post["Content-Type"] = "application/json"
@@ -16,7 +16,7 @@ if (token) {
   axios.defaults.headers.common["x-auth-token"] = token
 }
 
-// Add request interceptor for debugging
+// Add request interceptor for debugging  
 axios.interceptors.request.use(
   (config) => {
     console.log("Making request to:", config.url)
