@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           axios.defaults.headers.common["x-auth-token"] = token
-          const res = await axios.get("/api/auth")
+          const res = await axios.get("https://referhub.onrender.com/api/auth")
           setUser(res.data)
           setIsAuthenticated(true)
           console.log("User authenticated from token:", res.data.name)
@@ -56,12 +56,12 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       console.log("Attempting to register with data:", userData)
-      const res = await axios.post("/api/users", userData)
+      const res = await axios.post("https://referhub.onrender.com/api/users", userData)
 
       localStorage.setItem("token", res.data.token)
       axios.defaults.headers.common["x-auth-token"] = res.data.token
 
-      const userRes = await axios.get("/api/auth")
+      const userRes = await axios.get("https://referhub.onrender.com/api/auth")
       setUser(userRes.data)
       setIsAuthenticated(true)
 
@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", res.data.token)
       axios.defaults.headers.common["x-auth-token"] = res.data.token
 
-      const userRes = await axios.get("/api/auth")
+      const userRes = await axios.get("https://referhub.onrender.com/api/auth")
       setUser(userRes.data)
       setIsAuthenticated(true)
 
