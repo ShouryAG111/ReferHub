@@ -5,7 +5,7 @@ import App from "./App"
 import axios from "axios"
 
 // Set base URL for axios - make sure this matches your server port
-axios.defaults.baseURL = "https://referhub.onrender.com"
+
 
 // Set default headers
 axios.defaults.headers.post["Content-Type"] = "application/json"
