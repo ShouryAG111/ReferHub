@@ -210,7 +210,9 @@ const JobDetails = () => {
           {/* Job Description */}
           <div className="card border-0 shadow-sm mb-4">
             <div className="card-body p-4">
-              <h5 className="card-title mb-3">Why Me</h5>
+              {user.role === "jobseeker" ? (<h5 className="card-title mb-3">Why Me</h5>)
+              :
+              (<h5 className="card-title mb-3">Resume Link</h5>)}
               <div className="text-muted" style={{ lineHeight: "1.7" }}>
                 {job.description.split("\n").map((paragraph, index) => (
                   <p key={index} className="mb-3">

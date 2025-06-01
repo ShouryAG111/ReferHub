@@ -161,7 +161,7 @@ const JobPostForm = () => {
 
               <div className="mb-3">
                 <label htmlFor="description" className="form-label">
-                 Why Me
+                 Why Me / Resume Link
                 </label>
                 <textarea
                   className="form-control"
