@@ -253,20 +253,21 @@ const EmployerDashboard = () => {
                       <div key={referral._id} className="list-group-item">
                         <div className="d-flex w-100 justify-content-between align-items-start">
                           <div>
-                            <div className="d-flex align-items-center">
-                              <h5 className="mb-1">{referral.job.position}</h5>
-                              <span
-                                className={`badge bg-${
-                                  referral.status === "pending"
-                                    ? "warning"
-                                    : referral.status === "accepted"
-                                      ? "success"
-                                      : "danger"
-                                } ms-2`}
-                              >
-                                {referral.status.charAt(0).toUpperCase() + referral.status.slice(1)}
-                              </span>
-                            </div>
+                            <div className="d-flex justify-content-between align-items-center">
+  <h5 className="mb-1 mb-md-0">{referral.job.position}</h5>
+  <span
+    className={`badge bg-${
+      referral.status === "pending"
+        ? "warning"
+        : referral.status === "accepted"
+          ? "success"
+          : "danger"
+    }`}
+  >
+    {referral.status.charAt(0).toUpperCase() + referral.status.slice(1)}
+  </span>
+</div>
+
                             <p className="mb-1">To: {referral.jobSeeker.name}</p>
                             <p className="mb-1">Company: {referral.job.company}</p>
                             <small>Sent on: {new Date(referral.date).toLocaleDateString()}</small>

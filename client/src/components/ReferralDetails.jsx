@@ -147,7 +147,7 @@ const ReferralDetails = () => {
                   </div>
                 </div>
                 <div>
-                  <strong>Why Me</strong>
+                  <strong>Why Me / Resume Link</strong>
                   <p className="mt-1">{referral.job.description}</p>
                 </div>
               </div>
