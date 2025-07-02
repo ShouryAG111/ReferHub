@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -21,10 +21,10 @@ const EmployerDashboard = () => {
       try {
         setLoading(true)
 
-        // Fetch all jobs
+        // Fetching  all jobs
         const jobsRes = await axios.get("/api/jobs")
 
-        // Fetch referrals given by the current employer
+        // Fetching  referrals given by the current employer
         const referralsRes = await axios.get("/api/referrals/sent")
 
         setJobs(jobsRes.data || [])
@@ -46,7 +46,6 @@ const EmployerDashboard = () => {
     fetchData()
   }, [])
 
-  // Filter jobs based on search term, skill filter, location filter, and experience
   const filteredJobs = jobs.filter((job) => {
     if (!job) return false
 
@@ -193,7 +192,7 @@ const EmployerDashboard = () => {
                         {job.location}
                       </p>
 
-                      {/* Job Seeker Profile Information - Now from user object */}
+                      {/* Job Seeker Profile */}
                       {job.user && (
                         <div className="mb-2">
                           <div className="row">

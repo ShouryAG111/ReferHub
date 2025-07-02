@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
@@ -19,22 +19,22 @@ const JobSeekerDashboard = () => {
       try {
         setLoading(true)
 
-        // Fetch jobs posted by the current user
+        
         const jobsRes = await axios.get("/api/jobs/user")
 
-        // Fetch referrals for the current user
+       
         const referralsRes = await axios.get("/api/referrals/received")
 
         setJobs(jobsRes.data || [])
 
-        // Filter out referrals with null/undefined jobs
+   
         const validReferrals = (referralsRes.data || []).filter(
           (referral) => referral && referral.job && referral.employer,
         )
         setReferrals(validReferrals)
 
         setLoading(false)
-      } catch (err) {
+      } catch (err){
         console.error("Error fetching data:", err)
         toast.error("Failed to fetch data")
         setLoading(false)
@@ -103,13 +103,12 @@ const handleClearAllReferrals = async () => {
   try {
     setClearingReferrals(true)
 
-    // Delete all referrals for this job seeker
+    
     await axios.delete("/api/referrals/clear-all")
 
     // Clear the local state
     setReferrals([])
     setClearingReferrals(false)
-
     toast.success("All referrals cleared successfully!")
   } catch (err) {
     console.error("Clear all referrals error:", err)
@@ -220,7 +219,7 @@ const handleClearAllReferrals = async () => {
               ) : (
                 <div className="list-group">
                   {referrals.map((referral) => {
-                    // Additional safety check
+                   
                     if (!referral || !referral.job || !referral.employer) {
                       return null
                     }

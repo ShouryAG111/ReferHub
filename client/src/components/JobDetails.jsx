@@ -1,4 +1,4 @@
-"use client"
+
 
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
@@ -18,7 +18,7 @@ const JobDetails = () => {
   const [referralLoading, setReferralLoading] = useState(false)
 
   useEffect(() => {
-    const fetchJob = async () => {
+    const fetchJob = async () =>{
       try {
         setLoading(true)
         setError(null)
@@ -78,7 +78,7 @@ const JobDetails = () => {
       toast.error(errorMessage)
       setReferralLoading(false)
     }
-  }
+  } 
 
   if (loading) {
     return (
@@ -139,7 +139,7 @@ const JobDetails = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-lg-8">
-          {/* Header with Back Button */}
+          {/* Header */}
           <div className="d-flex align-items-center mb-4">
             <button onClick={() => navigate(-1)} className="btn btn-outline-secondary me-3">
               Back
@@ -182,10 +182,10 @@ const JobDetails = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </div>         
 
-          {/* Skills Section */}
-{/* Skills Section */}
+          
+{/* Skills Part */}
 <div className="card border-0 shadow-sm mb-4">
   <div className="card-body p-4">
     <h5 className="card-title mb-3">Required Skills</h5>
@@ -223,7 +223,7 @@ const JobDetails = () => {
             </div>
           </div>
 
-          {/* Job Seeker Profile */}
+          {/* Job Seeker*/}
           {job.user && (
             <div className="card border-0 shadow-sm mb-4">
               <div className="card-body p-4">
@@ -286,7 +286,7 @@ const JobDetails = () => {
             </div>
           )}
 
-          {/* Referral Action Card - For Employers */}
+          {/* For Employers only */}
           {user && user.role === "employer" && job.user && (
             <div className="card border-0 shadow-sm mb-4">
               <div className="card-body p-4">
