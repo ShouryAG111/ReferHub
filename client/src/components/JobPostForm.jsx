@@ -12,7 +12,7 @@ const JobPostForm = () => {
     location: "",
     skills: "",
     description: "",
-  })
+  })                      
 
   const { company, position, jobId, jobUrl, location, skills, description } = formData
   const [loading, setLoading] = useState(false)
@@ -28,7 +28,7 @@ const JobPostForm = () => {
     try {
       setLoading(true)
 
-      // Convert skills string to array
+     // Converting  skills string to array
       const jobData = {
         ...formData,
         skills: skills.split(",").map((skill) => skill.trim()),
@@ -56,7 +56,7 @@ const JobPostForm = () => {
             {/* Simplified notice */}
             <div className="alert alert-info mb-4">
               <i className="fas fa-info-circle me-2"></i>
-              <strong>Note:</strong> Your profile information (experience, current company, LinkedIn) will be
+              <strong>Note:</strong> Your profile information(experience, current company, LinkedIn) will be
               automatically included with this job post to help employers understand your background.
             </div>
 
@@ -170,7 +170,7 @@ const JobPostForm = () => {
                   rows="4"
                   placeholder="Describe the role, responsibilities, and what makes this your dream job..."
                   required
-                ></textarea>
+                ></textarea> 
               </div>
 
               <button type="submit" className="btn btn-primary w-100" disabled={loading}>

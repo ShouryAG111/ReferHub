@@ -21,18 +21,17 @@ const EmployerDashboard = () => {
       try {
         setLoading(true)
 
-        // Fetching  all jobs
         const jobsRes = await axios.get("/api/jobs")
-
         // Fetching  referrals given by the current employer
         const referralsRes = await axios.get("/api/referrals/sent")
 
         setJobs(jobsRes.data || [])
 
-        // Filter out referrals with null/undefined jobs
+        
         const validReferrals = (referralsRes.data || []).filter(
           (referral) => referral && referral.job && referral.jobSeeker,
         )
+
         setReferrals(validReferrals)
 
         setLoading(false)
@@ -87,12 +86,12 @@ const EmployerDashboard = () => {
     navigate(`/job/${jobId}`)
   }
 
-  const handleDeleteReferral = async (referralId, jobTitle) => {
+  const handleDeleteReferral = async (referralId) => {
   try {
     setDeleteLoading(referralId)
     await axios.delete(`/api/referrals/${referralId}`)
 
-    // Remove the referral from the local state
+    
     setReferrals(referrals.filter((referral) => referral._id !== referralId))
     setDeleteLoading(null)
 

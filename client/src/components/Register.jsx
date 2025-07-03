@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
@@ -9,7 +7,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
+    password: "",      
     password2: "",
     role: "jobseeker",
     yearsOfExperience: "",
@@ -26,8 +24,6 @@ const Register = () => {
   const from = location.state?.from?.pathname || null
 
   useEffect(() => {
-    // Only redirect if this is a successful registration (not a page reload)
-    // and we have completed the initial authentication check
     if (isAuthenticated && initialLoadComplete && from !== location.pathname) {
       const redirectTo = from || (user?.role === "jobseeker" ? "/jobseeker/dashboard" : "/employer/dashboard")
       navigate(redirectTo, { replace: true })

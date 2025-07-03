@@ -4,10 +4,10 @@ import "./index.css"
 import App from "./App"
 import axios from "axios"
 
-// Set base URL for axios - make sure this matches your server port
 
 
-// Set default headers
+
+// Setting default headers
 axios.defaults.headers.post["Content-Type"] = "application/json"
 
 // Add token to headers if it exists in localStorage
@@ -16,7 +16,7 @@ if (token) {
   axios.defaults.headers.common["x-auth-token"] = token
 }
 
-// Add request interceptor for debugging  
+
 axios.interceptors.request.use(
   (config) => {
     console.log("Making request to:", config.url)
@@ -29,7 +29,7 @@ axios.interceptors.request.use(
   },
 )
 
-// Add response interceptor for debugging
+
 axios.interceptors.response.use(
   (response) => {
     console.log("Response received:", response.data)

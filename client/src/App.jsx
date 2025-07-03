@@ -30,7 +30,6 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     )
   }
 
-  // If not authenticated, redirect to login with the current location
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
@@ -45,10 +44,10 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 }
 
 // Public route component (for login/register pages)
-const PublicRoute = ({ children }) => {
+const PublicRoute = ({ children }) =>{
   const { isLoading, initialLoadComplete } = useAuth()
 
-  // Show loading spinner while checking authentication
+// Show loading spinner while checking authentication
   if (isLoading || !initialLoadComplete) {
     return (
       <div className="text-center mt-5">
@@ -59,7 +58,6 @@ const PublicRoute = ({ children }) => {
       </div>
     )
   }
-
   return children
 }
 

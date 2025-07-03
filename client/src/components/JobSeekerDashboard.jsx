@@ -78,7 +78,7 @@ const JobSeekerDashboard = () => {
     try {
       await axios.put(`/api/referrals/${referralId}`, { status })
 
-      // Refresh the referrals list from server instead of local update
+      // Refreshing the referrals list from server instead of local update
       await refreshReferrals()
 
       const actionText = status === "accepted" ? "accepted" : "rejected"
@@ -106,7 +106,7 @@ const handleClearAllReferrals = async () => {
     
     await axios.delete("/api/referrals/clear-all")
 
-    // Clear the local state
+    // Clearing the local state
     setReferrals([])
     setClearingReferrals(false)
     toast.success("All referrals cleared successfully!")
@@ -137,7 +137,7 @@ const handleClearAllReferrals = async () => {
       <div className="row">
         <div className="col-md-6">
           <div className="card mb-4">
-            <div className="card-header">
+            <div className="card-header">  
               <h3 className="card-title">Job Posts</h3>
             </div>
             <div className="card-body">
