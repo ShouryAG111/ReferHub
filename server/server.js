@@ -59,31 +59,31 @@ console.log("✓ Jobs routes registered")
 app.use("/api/referrals", require("./routes/referrals"))
 console.log("✓ Referrals routes registered")
 
-// Test route to verify server is working
+
 app.get("/api/test", (req, res) => {
   res.json({ msg: "Server is working!" })
 })
 
-// Route debugging middleware
+
 app.use("/api/*", (req, res, next) => {
   console.log(`❌ Unmatched route: ${req.method} ${req.originalUrl}`)
   res.status(404).json({ msg: `Route not found: ${req.method} ${req.originalUrl}` })
 })
 
-// Error handling middleware
+
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err)
   res.status(500).json({ msg: "Internal server error", error: err.message })
 })
 
-// Serve static assets in production
+
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 
 
-// Setup scheduled task for auto-deletion of rejected referrals
+
 const setupAutoDeleteTask = () => {
   const HOUR_IN_MS = 60 * 60 * 1000
 
@@ -96,10 +96,10 @@ const setupAutoDeleteTask = () => {
       const oneDayAgo = new Date()
       oneDayAgo.setDate(oneDayAgo.getDate() - 1)
 
-      // Import Referral model
+      
       const Referral = require("./models/Referral")
 
-      // Find and delete rejected referrals older than 1 day
+      
       const result = await Referral.deleteMany({
         status: "rejected",
         date: { $lt: oneDayAgo },
@@ -113,10 +113,10 @@ const setupAutoDeleteTask = () => {
     }
   }
 
-  // Run cleanup immediately
+
   runCleanup()
 
-  // Run the cleanup every hour
+
   setInterval(runCleanup, HOUR_IN_MS)
 
   console.log("Scheduled task for auto-deletion of rejected referrals has been set up")
@@ -147,11 +147,11 @@ const server = app.listen(PORT, () => {
   console.log("- PUT  /api/referrals/:id")
   console.log("- DELETE /api/referrals/:id")
 
-  // Start the auto-deletion task
+  
   setupAutoDeleteTask()
 })
 
-// Handle server shutdown gracefully
+
 process.on("SIGTERM", () => {
   console.log("SIGTERM received, shutting down gracefully")
   server.close(() => {

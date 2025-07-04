@@ -5,11 +5,6 @@ const Referral = require("../models/Referral")
 const Job = require("../models/Job")
 const User = require("../models/User")
 
-// IMPORTANT: Put specific routes BEFORE parameterized routes (:id)
-
-// @route   GET api/referrals/sent
-// @desc    Get all referrals sent by the employer
-// @access  Private
 router.get("/sent", auth, async (req, res) => {
   try {
     // Check if user is an employer
@@ -24,7 +19,7 @@ router.get("/sent", auth, async (req, res) => {
       .populate("job", "company position")
       .populate("jobSeeker", "name email")
 
-    // Filter out referrals where job or jobSeeker is null (deleted records)
+
     const validReferrals = referrals.filter((referral) => referral.job && referral.jobSeeker)
 
     res.json(validReferrals)
@@ -33,13 +28,10 @@ router.get("/sent", auth, async (req, res) => {
     res.status(500).send("Server Error")
   }
 })
-
-// @route   GET api/referrals/received
-// @desc    Get all referrals received by the job seeker
-// @access  Private
+ 
 router.get("/received", auth, async (req, res) => {
   try {
-    // Check if user is a job seeker
+
     const user = await User.findById(req.user.id)
 
     if (user.role !== "jobseeker") {
@@ -51,7 +43,7 @@ router.get("/received", auth, async (req, res) => {
       .populate("job", "company position")
       .populate("employer", "name email yearsOfExperience currentCompany linkedinProfile")
 
-    // Filter out referrals where job or employer is null (deleted records)
+    
     const validReferrals = referrals.filter((referral) => referral.job && referral.employer)
 
     res.json(validReferrals)
@@ -61,18 +53,12 @@ router.get("/received", auth, async (req, res) => {
   }
 })
 
-// @route   GET api/referrals/cleanup-rejected
-// @desc    Clean up rejected referrals older than 1 day
-// @access  Public (meant to be called by a scheduled task)
 router.get("/cleanup-rejected", async (req, res) => {
   try {
-    // Calculate date 1 day ago
     const oneDayAgo = new Date()
     oneDayAgo.setDate(oneDayAgo.getDate() - 1)
-
     console.log(`Looking for rejected referrals older than: ${oneDayAgo}`)
-
-    // Find rejected referrals older than 1 day first (for logging)
+    
     const toDelete = await Referral.find({
       status: "rejected",
       date: { $lt: oneDayAgo },
@@ -87,7 +73,7 @@ router.get("/cleanup-rejected", async (req, res) => {
       }
     })
 
-    // Find and delete rejected referrals older than 1 day
+    
     const result = await Referral.deleteMany({
       status: "rejected",
       date: { $lt: oneDayAgo },
@@ -107,9 +93,7 @@ router.get("/cleanup-rejected", async (req, res) => {
   }
 })
 
-// @route   DELETE api/referrals/clear-all
-// @desc    Clear all referrals for the current job seeker
-// @access  Private
+
 router.delete("/clear-all", auth, async (req, res) => {
   try {
     // Check if user is a job seeker
@@ -121,7 +105,7 @@ router.delete("/clear-all", auth, async (req, res) => {
 
     console.log(`Clearing all referrals for job seeker: ${user.name} (ID: ${req.user.id})`)
 
-    // Find all referrals for this job seeker (for logging)
+    
     const referralsToDelete = await Referral.find({ jobSeeker: req.user.id })
       .populate("job", "position company")
       .populate("employer", "name")
@@ -133,7 +117,7 @@ router.delete("/clear-all", auth, async (req, res) => {
       }
     })
 
-    // Delete all referrals for this job seeker
+    
     const result = await Referral.deleteMany({ jobSeeker: req.user.id })
 
     console.log(`Cleared ${result.deletedCount} referrals for ${user.name}`)
@@ -149,9 +133,7 @@ router.delete("/clear-all", auth, async (req, res) => {
   }
 })
 
-// @route   DELETE api/referrals/cleanup
-// @desc    Clean up referrals with deleted jobs (admin function)
-// @access  Private
+
 router.delete("/cleanup", auth, async (req, res) => {
   try {
     // Find all referrals
@@ -160,7 +142,7 @@ router.delete("/cleanup", auth, async (req, res) => {
     let deletedCount = 0
 
     for (const referral of referrals) {
-      // Check if the job still exists
+      
       const jobExists = await Job.findById(referral.job)
 
       if (!jobExists) {
@@ -179,10 +161,7 @@ router.delete("/cleanup", auth, async (req, res) => {
   }
 })
 
-// PUT THIS ROUTE AFTER ALL SPECIFIC ROUTES
-// @route   GET api/referrals/:id
-// @desc    Get referral details by ID
-// @access  Private
+
 router.get("/:id", auth, async (req, res) => {
   try {
     // Validate ObjectId format
@@ -212,9 +191,7 @@ router.get("/:id", auth, async (req, res) => {
   }
 })
 
-// @route   POST api/referrals
-// @desc    Create a referral (simplified - no message required)
-// @access  Private
+
 router.post("/", auth, async (req, res) => {
   try {
     // Check if user is an employer
@@ -264,9 +241,7 @@ router.post("/", auth, async (req, res) => {
   }
 })
 
-// @route   PUT api/referrals/:id
-// @desc    Update referral status
-// @access  Private
+
 router.put("/:id", auth, async (req, res) => {
   try {
     const { status } = req.body

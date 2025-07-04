@@ -5,10 +5,9 @@ const Job = require("../models/Job")
 const User = require("../models/User")
 const mongoose = require("mongoose")
 
-// @route   GET api/jobs
-// @desc    Get all jobs
-// @access  Private
+
 router.get("/", auth, async (req, res) => {
+
   try {
     const jobs = await Job.find()
       .sort({ date: -1 })
@@ -20,9 +19,7 @@ router.get("/", auth, async (req, res) => {
   }
 })
 
-// @route   GET api/jobs/user
-// @desc    Get all jobs for current user
-// @access  Private
+
 router.get("/user", auth, async (req, res) => {
   try {
     const jobs = await Job.find({ user: req.user.id })
@@ -35,12 +32,10 @@ router.get("/user", auth, async (req, res) => {
   }
 })
 
-// @route   GET api/jobs/:id
-// @desc    Get job by ID
-// @access  Private
+
 router.get("/:id", auth, async (req, res) => {
   try {
-    // Validate if the ID is a valid MongoDB ObjectId
+   
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ msg: "Invalid job ID format" })
     }
@@ -69,12 +64,9 @@ router.get("/:id", auth, async (req, res) => {
   }
 })
 
-// @route   POST api/jobs
-// @desc    Create a job
-// @access  Private
+
 router.post("/", auth, async (req, res) => {
   try {
-    // Check if user is a job seeker and get their profile
     const user = await User.findById(req.user.id)
 
     if (!user) {
@@ -85,7 +77,6 @@ router.post("/", auth, async (req, res) => {
       return res.status(403).json({ msg: "Only job seekers can post jobs" })
     }
 
-    // Check if user has complete profile information
     if (!user.yearsOfExperience && user.yearsOfExperience !== 0) {
       return res.status(400).json({
         msg: "Please complete your profile with years of experience before posting a job. Go to Profile → Update your information.",
@@ -106,7 +97,7 @@ router.post("/", auth, async (req, res) => {
 
     const { company, position, jobId, jobUrl, location, skills, description } = req.body
 
-    // Validate required fields
+   
     if (!company || !position || !jobId || !jobUrl || !location || !skills || !description) {
       return res.status(400).json({ msg: "Please provide all required fields" })
     }
@@ -124,7 +115,6 @@ router.post("/", auth, async (req, res) => {
 
     const job = await newJob.save()
 
-    // Populate the user information before sending response
     const populatedJob = await Job.findById(job._id).populate(
       "user",
       "name email yearsOfExperience currentCompany linkedinProfile",
@@ -138,12 +128,10 @@ router.post("/", auth, async (req, res) => {
   }
 })
 
-// @route   PUT api/jobs/:id
-// @desc    Update a job
-// @access  Private
+
 router.put("/:id", auth, async (req, res) => {
   try {
-    // Validate if the ID is a valid MongoDB ObjectId
+  
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ msg: "Invalid job ID format" })
     }
@@ -154,7 +142,6 @@ router.put("/:id", auth, async (req, res) => {
       return res.status(404).json({ msg: "Job not found" })
     }
 
-    // Make sure user owns the job
     if (job.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized" })
     }
@@ -168,7 +155,7 @@ router.put("/:id", auth, async (req, res) => {
     if (jobId) jobFields.jobId = jobId
     if (jobUrl) jobFields.jobUrl = jobUrl
     if (location) jobFields.location = location
-    if (skills) {
+    if (skills){
       jobFields.skills = Array.isArray(skills) ? skills : skills.split(",").map((skill) => skill.trim())
     }
     if (description) jobFields.description = description
@@ -185,9 +172,7 @@ router.put("/:id", auth, async (req, res) => {
   }
 })
 
-// @route   DELETE api/jobs/:id
-// @desc    Delete a job
-// @access  Private
+
 router.delete("/:id", auth, async (req, res) => {
   try {
     // Validate if the ID is a valid MongoDB ObjectId
@@ -197,11 +182,11 @@ router.delete("/:id", auth, async (req, res) => {
 
     const job = await Job.findById(req.params.id)
 
-    if (!job) {
+    if (!job){
       return res.status(404).json({ msg: "Job not found" })
     }
 
-    // Make sure user owns the job
+    // Making sure user owns the job
     if (job.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized" })
     }

@@ -4,16 +4,14 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")
 
-// @route   POST api/users
-// @desc    Register a user
-// @access  Public
+
 router.post("/", async (req, res) => {
   console.log("Registration request received")
   console.log("Request body:", req.body)
 
   const { name, email, password, role, yearsOfExperience, currentCompany, linkedinProfile } = req.body
 
-  // Validate required fields
+
   if (!name || !email || !password || !role || yearsOfExperience === undefined || !currentCompany || !linkedinProfile) {
     console.log("Missing required fields")
     return res.status(400).json({
@@ -21,33 +19,31 @@ router.post("/", async (req, res) => {
     })
   }
 
-  // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailRegex.test(email)) {
     console.log("Invalid email format")
     return res.status(400).json({ msg: "Please provide a valid email address" })
   }
 
-  // Validate password length
+  
   if (password.length < 6) {
     console.log("Password too short")
     return res.status(400).json({ msg: "Password must be at least 6 characters long" })
   }
 
-  // Validate role
+
   if (!["jobseeker", "employer"].includes(role)) {
     console.log("Invalid role")
     return res.status(400).json({ msg: "Role must be either 'jobseeker' or 'employer'" })
   }
 
-  // Validate years of experience
   const experience = Number.parseInt(yearsOfExperience)
   if (isNaN(experience) || experience < 0 || experience > 50) {
     console.log("Invalid years of experience")
     return res.status(400).json({ msg: "Years of experience must be a number between 0 and 50" })
   }
 
-  // Validate LinkedIn URL
+ 
   const linkedinRegex = /^https:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/
   if (!linkedinRegex.test(linkedinProfile)) {
     console.log("Invalid LinkedIn URL")

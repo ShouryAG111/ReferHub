@@ -77,7 +77,6 @@ const EmployerDashboard = () => {
           return true
       }
     }
-
     return matchesSearch && matchesSkill && matchesLocation && matchesExperience()
   })
 
