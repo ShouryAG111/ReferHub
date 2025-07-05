@@ -263,7 +263,7 @@ router.put("/:id", auth, async (req, res) => {
       return res.status(404).json({ msg: "Referral not found" })
     }
 
-    // Make sure user is the job seeker who received the referral
+    
     if (referral.jobSeeker.toString() !== req.user.id) {
       return res.status(401).json({ msg: "Not authorized" })
     }
@@ -277,9 +277,7 @@ router.put("/:id", auth, async (req, res) => {
   }
 })
 
-// @route   DELETE api/referrals/:id
-// @desc    Delete a referral (for employers)
-// @access  Private
+
 router.delete("/:id", auth, async (req, res) => {
   try {
     // Validate ObjectId format
