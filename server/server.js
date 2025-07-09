@@ -6,7 +6,7 @@ require("dotenv").config()
 
 const app = express()
 
-// Middleware
+
 app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ extended: true }))
 
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next()
 })
 
-// Connect to MongoDB
+// Connecting to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
@@ -41,7 +41,7 @@ mongoose
     process.exit(1)
   })
 
-// Define Routes - Order matters!
+
 console.log("Registering routes...")
 
 app.use("/api/users", require("./routes/users"))
@@ -130,22 +130,7 @@ const server = app.listen(PORT, () => {
   console.log(`MongoDB URI: ${process.env.MONGO_URI ? "✓ Set" : "❌ Not set"}`)
   console.log(`JWT Secret: ${process.env.JWT_SECRET ? "✓ Set" : "❌ Not set"}`)
 
-  // Test all routes
-  console.log("\n📋 Testing route registration:")
-  console.log("Available routes:")
-  console.log("- GET  /api/test")
-  console.log("- POST /api/users")
-  console.log("- GET  /api/auth")
-  console.log("- POST /api/auth")
-  console.log("- GET  /api/profile")
-  console.log("- PUT  /api/profile")
-  console.log("- GET  /api/jobs")
-  console.log("- POST /api/jobs")
-  console.log("- GET  /api/referrals/sent")
-  console.log("- GET  /api/referrals/received")
-  console.log("- POST /api/referrals")
-  console.log("- PUT  /api/referrals/:id")
-  console.log("- DELETE /api/referrals/:id")
+
 
   
   setupAutoDeleteTask()

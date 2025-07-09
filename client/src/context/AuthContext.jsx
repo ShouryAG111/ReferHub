@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const login = async (email, password) => {
-    try {
+    try{
       console.log("Attempting to login with email:", email)
       const res = await axios.post("/api/auth", { email, password })
 
@@ -87,10 +87,10 @@ export const AuthProvider = ({ children }) => {
       const userRes = await axios.get("/api/auth")
       setUser(userRes.data)
       setIsAuthenticated(true)
-
       toast.success(`Welcome back, ${userRes.data.name}!`)
       return { success: true, user: userRes.data }
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Login error:", err)
       const errorMessage = err.response?.data?.msg || "Invalid credentials"
       toast.error(errorMessage)
@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false)
     toast.info("You have been logged out successfully.")
   }
-
+  
   return (
     <AuthContext.Provider
       value={{

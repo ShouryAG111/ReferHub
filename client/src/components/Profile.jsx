@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -6,6 +5,7 @@ import { toast } from "react-toastify"
 import { useAuth } from "../context/AuthContext"
 
 const Profile = () => {
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,9 +14,10 @@ const Profile = () => {
     currentCompany: "",
     linkedinProfile: "",
   })
+
   const [loading, setLoading] = useState(true)
   const [updating, setUpdating] = useState(false)
-  const { user, isAuthenticated } = useAuth()
+  const {isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
   const { name, email, role, yearsOfExperience, currentCompany, linkedinProfile } = formData

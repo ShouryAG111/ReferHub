@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
@@ -8,7 +6,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
+  }) 
   const { email, password } = formData
   const { login, isAuthenticated, user, initialLoadComplete } = useAuth()
   const navigate = useNavigate()

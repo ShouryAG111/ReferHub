@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, isAuthenticated, isLoading, initialLoadComplete } = useAuth()
   const location = useLocation()
 
-  // Show loading spinner while checking authentication
+ 
   if (isLoading || !initialLoadComplete) {
     return (
       <div className="text-center mt-5">
@@ -43,7 +43,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   return children
 }
 
-// Public route component (for login/register pages)
+// Public route component for login register
 const PublicRoute = ({ children }) =>{
   const { isLoading, initialLoadComplete } = useAuth()
 

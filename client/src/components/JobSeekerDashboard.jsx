@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
@@ -7,22 +5,22 @@ import { toast } from "react-toastify"
 import { useAuth } from "../context/AuthContext"
 
 const JobSeekerDashboard = () => {
+
   const [jobs, setJobs] = useState([])
   const [referrals, setReferrals] = useState([])
   const [loading, setLoading] = useState(true)
   const [deleteLoading, setDeleteLoading] = useState(null)
   const [clearingReferrals, setClearingReferrals] = useState(false)
-  const { user } = useAuth()
-
+ 
   useEffect(() => {
     const fetchData = async () => {
+
       try {
+
         setLoading(true)
 
-        
         const jobsRes = await axios.get("/api/jobs/user")
 
-       
         const referralsRes = await axios.get("/api/referrals/received")
 
         setJobs(jobsRes.data || [])
@@ -34,7 +32,8 @@ const JobSeekerDashboard = () => {
         setReferrals(validReferrals)
 
         setLoading(false)
-      } catch (err){
+      }
+     catch (err){
         console.error("Error fetching data:", err)
         toast.error("Failed to fetch data")
         setLoading(false)
@@ -44,7 +43,7 @@ const JobSeekerDashboard = () => {
     fetchData()
   }, [])
 
-  const handleDeleteJob = async (jobId, jobTitle) => {
+  const handleDeleteJob = async (jobId) => {
   try {
     setDeleteLoading(jobId)
     await axios.delete(`/api/jobs/${jobId}`)
