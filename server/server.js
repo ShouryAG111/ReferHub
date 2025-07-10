@@ -20,7 +20,7 @@ app.use(
   }),
 )
 
-// Request logging middleware
+//logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`)
   if (req.headers["x-auth-token"]) {
