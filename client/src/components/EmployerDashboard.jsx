@@ -6,6 +6,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 const EmployerDashboard = () => {
+
   const [jobs, setJobs] = useState([])
   const [referrals, setReferrals] = useState([])
   const [loading, setLoading] = useState(true)
@@ -77,6 +78,7 @@ const EmployerDashboard = () => {
           return true
       }
     }
+
     return matchesSearch && matchesSkill && matchesLocation && matchesExperience()
   })
 
@@ -89,13 +91,13 @@ const EmployerDashboard = () => {
   try {
     setDeleteLoading(referralId)
     await axios.delete(`/api/referrals/${referralId}`)
-
     
     setReferrals(referrals.filter((referral) => referral._id !== referralId))
     setDeleteLoading(null)
 
     toast.success("Referral deleted successfully!")
-  } catch (err) {
+  }
+  catch (err) {
     const errorMessage = err.response?.data?.msg || "Failed to delete referral"
     toast.error(errorMessage)
     setDeleteLoading(null)

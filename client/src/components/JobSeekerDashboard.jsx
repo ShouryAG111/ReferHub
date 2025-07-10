@@ -93,28 +93,28 @@ const JobSeekerDashboard = () => {
     }
   }
 
-const handleClearAllReferrals = async () => {
-  if (referrals.length === 0) {
-    toast.info("No referrals to clear")
-    return
+  const handleClearAllReferrals = async () => {
+    if (referrals.length === 0) {
+      toast.info("No referrals to clear")
+      return
+    }
+
+    try {
+      setClearingReferrals(true)
+
+      
+      await axios.delete("/api/referrals/clear-all")
+
+      // Clearing the local state
+      setReferrals([])
+      setClearingReferrals(false)
+      toast.success("All referrals cleared successfully!")
+    } catch (err) {
+      console.error("Clear all referrals error:", err)
+      toast.error("Failed to clear referrals: " + (err.response?.data?.msg || err.message))
+      setClearingReferrals(false)
+    }
   }
-
-  try {
-    setClearingReferrals(true)
-
-    
-    await axios.delete("/api/referrals/clear-all")
-
-    // Clearing the local state
-    setReferrals([])
-    setClearingReferrals(false)
-    toast.success("All referrals cleared successfully!")
-  } catch (err) {
-    console.error("Clear all referrals error:", err)
-    toast.error("Failed to clear referrals: " + (err.response?.data?.msg || err.message))
-    setClearingReferrals(false)
-  }
-}
 
 
   if (loading)
