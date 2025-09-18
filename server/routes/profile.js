@@ -3,11 +3,9 @@ const router = express.Router()
 const auth = require("../middleware/auth")
 const User = require("../models/User")
 
-// @route   GET api/profile
-// @desc    Get current user's profile
-// @access  Private
+
 router.get("/", auth, async (req, res) => {
-  try {
+  try{
     const user = await User.findById(req.user.id).select("-password")
 
     if (!user) {
@@ -15,15 +13,14 @@ router.get("/", auth, async (req, res) => {
     }
 
     res.json(user)
-  } catch (err) {
+  }
+   catch (err) {
     console.error("Error fetching profile:", err.message)
     res.status(500).json({ msg: "Server Error", error: err.message })
   }
 })
 
-// @route   PUT api/profile
-// @desc    Update user profile
-// @access  Private
+
 router.put("/", auth, async (req, res) => {
   try {
     const { name, yearsOfExperience, currentCompany, linkedinProfile } = req.body
@@ -36,7 +33,7 @@ router.put("/", auth, async (req, res) => {
     }
 
     // Validate years of experience
-    if (yearsOfExperience < 0 || yearsOfExperience > 50) {
+    if (yearsOfExperience < 0 || yearsOfExperience > 50){
       return res.status(400).json({ msg: "Years of experience must be between 0 and 50" })
     }
 

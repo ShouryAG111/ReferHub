@@ -8,6 +8,7 @@ const app = express()
 
 
 app.use(express.json({ limit: "10mb" }))
+
 app.use(express.urlencoded({ extended: true }))
 
 // CORS configuration
@@ -41,7 +42,6 @@ mongoose
     process.exit(1)
   })
 
-
 console.log("Registering routes...")
 
 app.use("/api/users", require("./routes/users"))
@@ -64,18 +64,15 @@ app.get("/api/test", (req, res) => {
   res.json({ msg: "Server is working!" })
 })
 
-
 app.use("/api/*", (req, res, next) => {
   console.log(`❌ Unmatched route: ${req.method} ${req.originalUrl}`)
   res.status(404).json({ msg: `Route not found: ${req.method} ${req.originalUrl}` })
 })
 
-
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err)
   res.status(500).json({ msg: "Internal server error", error: err.message })
 })
-
 
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 app.get("*", (req, res) => {

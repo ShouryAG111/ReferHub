@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -23,7 +21,9 @@ const EmployerDashboard = () => {
         setLoading(true)
 
         const jobsRes = await axios.get("/api/jobs")
+
         // Fetching  referrals given by the current employer
+
         const referralsRes = await axios.get("/api/referrals/sent")
 
         setJobs(jobsRes.data || [])
@@ -36,14 +36,15 @@ const EmployerDashboard = () => {
         setReferrals(validReferrals)
 
         setLoading(false)
-      } catch (err) {
+      } 
+      catch (err) {
         console.error("Error fetching data:", err)
         toast.error("Failed to fetch data")
         setLoading(false)
       }
     }
 
-    fetchData()
+    fetchData();
   }, [])
 
   const filteredJobs = jobs.filter((job) => {
@@ -107,7 +108,7 @@ const EmployerDashboard = () => {
   if (loading)
     return (
       <div className="text-center mt-5">
-        <div className="spinner-border"></div>
+        <div className="spinner-border"> </div>
       </div>
     )
 

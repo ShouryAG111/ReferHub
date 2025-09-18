@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: job-referral-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      MONGO_URI: mongodb+srv://shouryagupta771:MKNq1jaqtOC5JnFB@cluster0.f36blyy.mongodb.net/jobreferral
+      JWT_SECRET: 1234567890
+    ports:
+      - "8000:8000"
+    networks:
+      - job-referral-network
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: https://referhub.onrender.com
+    container_name: job-referral-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - job-referral-network
+
+networks:
+  job-referral-network:
+    driver: bridge

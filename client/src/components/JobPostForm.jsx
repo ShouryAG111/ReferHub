@@ -4,6 +4,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 const JobPostForm = () => {
+  
   const [formData, setFormData] = useState({
     company: "",
     position: "",

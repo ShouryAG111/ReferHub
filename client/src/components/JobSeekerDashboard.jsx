@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"
-import { useAuth } from "../context/AuthContext"
 
 const JobSeekerDashboard = () => {
 
@@ -48,12 +47,13 @@ const JobSeekerDashboard = () => {
     setDeleteLoading(jobId)
     await axios.delete(`/api/jobs/${jobId}`)
 
-    // Remove the job from the local state
+    // Removing the job from the local state
     setJobs(jobs.filter((job) => job._id !== jobId))
-    setDeleteLoading(null)
+    setDeleteLoading(null);
 
     toast.success("Job post deleted successfully!")
-  } catch (err) {
+  } 
+  catch (err) {
     const errorMessage = err.response?.data?.msg || "Failed to delete job post"
     toast.error(errorMessage)
     setDeleteLoading(null)
@@ -87,7 +87,8 @@ const JobSeekerDashboard = () => {
       } else {
         toast.success(`Referral for "${jobTitle}" ${actionText} successfully!`)
       }
-    } catch (err) {
+    }
+    catch (err) {
       const errorMessage = err.response?.data?.msg || "Failed to update referral status"
       toast.error(errorMessage)
     }

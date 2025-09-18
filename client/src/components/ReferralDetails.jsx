@@ -5,7 +5,8 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { useAuth } from "../context/AuthContext"
 
-const ReferralDetails = () => {
+const ReferralDetails = () =>{
+  
   const { id } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
