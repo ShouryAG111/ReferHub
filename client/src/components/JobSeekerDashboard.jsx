@@ -130,7 +130,7 @@ const JobSeekerDashboard = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Dashboard</h2>
         <Link to="/jobseeker/post" className="btn btn-primary">
-          Post Job
+         Dont Post Job
         </Link>
       </div>
 
