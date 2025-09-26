@@ -16,11 +16,7 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-<<<<<<< HEAD
-                // Use Windows syntax for credentials
-=======
-                // Use Windows CMD syntax to access credentials
->>>>>>> 887e8446fab37700657fac0b5e7364deedaa7a91
+                
                 bat 'echo %DOCKERHUB_CREDS_PSW% | docker login -u %DOCKERHUB_CREDS_USR% --password-stdin'
             }
         }
@@ -57,4 +53,3 @@ pipeline {
         }
     }
 }
-
