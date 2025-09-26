@@ -14,32 +14,32 @@ pipeline {
             }
         }
 
-        stage('Build Frontend Image') {
-            steps {
-                dir('frontend') {
-                    bat 'docker build -t $FRONTEND_IMAGE .'
-                }
-            }
-        }
-
-        stage('Build Backend Image') {
-            steps {
-                dir('backend') {
-                    bat 'docker build -t $BACKEND_IMAGE .'
-                }
-            }
-        }
-
         stage('Login to Docker Hub') {
             steps {
-                bat 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
+                // Use Windows CMD syntax to access credentials
+                bat 'echo %DOCKERHUB_CREDS_PSW% | docker login -u %DOCKERHUB_CREDS_USR% --password-stdin'
             }
         }
 
-        stage('Push Images') {
+        stage('Build and Push Frontend Image') {
             steps {
-                bat 'docker push $FRONTEND_IMAGE'
-                bat 'docker push $BACKEND_IMAGE'
+                dir('frontend') {
+                    bat """
+                    docker build -t %FRONTEND_IMAGE% .
+                    docker push %FRONTEND_IMAGE%
+                    """
+                }
+            }
+        }
+
+        stage('Build and Push Backend Image') {
+            steps {
+                dir('backend') {
+                    bat """
+                    docker build -t %BACKEND_IMAGE% .
+                    docker push %BACKEND_IMAGE%
+                    """
+                }
             }
         }
     }
@@ -53,3 +53,4 @@ pipeline {
         }
     }
 }
+
