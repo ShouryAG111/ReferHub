@@ -16,7 +16,6 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                
                 bat 'echo %DOCKERHUB_CREDS_PSW% | docker login -u %DOCKERHUB_CREDS_USR% --password-stdin'
             }
         }
@@ -35,10 +34,17 @@ pipeline {
         stage('Build and Push Backend Image') {
             steps {
                 dir('server') {
-                    bat """
-                    docker build -t %BACKEND_IMAGE% .
-                    docker push %BACKEND_IMAGE%
-                    """
+                    withCredentials([
+                        string(credentialsId: 'mongo-uri', variable: 'MONGO_URI'),
+                        string(credentialsId: 'jwt-secret', variable: 'JWT_SECRET')
+                    ]) {
+                        bat """
+                        docker build --build-arg MONGO_URI=%MONGO_URI% ^
+                                     --build-arg JWT_SECRET=%JWT_SECRET% ^
+                                     -t %BACKEND_IMAGE% .
+                        docker push %BACKEND_IMAGE%
+                        """
+                    }
                 }
             }
         }
