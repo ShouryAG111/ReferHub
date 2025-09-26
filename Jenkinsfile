@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build and Push Frontend Image') {
             steps {
-                dir('frontend') {
+                dir('client') {
                     bat """
                     docker build -t %FRONTEND_IMAGE% .
                     docker push %FRONTEND_IMAGE%
@@ -34,7 +34,7 @@ pipeline {
 
         stage('Build and Push Backend Image') {
             steps {
-                dir('backend') {
+                dir('server') {
                     bat """
                     docker build -t %BACKEND_IMAGE% .
                     docker push %BACKEND_IMAGE%
