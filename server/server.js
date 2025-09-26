@@ -116,7 +116,7 @@ const setupAutoDeleteTask = () => {
 
   setInterval(runCleanup, HOUR_IN_MS)
 
-  console.log("Scheduled task for auto-deletion of rejected referrals has been set up")
+  console.log("Auto deployment using jenkins")
 }
 
 const PORT = process.env.PORT || 8000
