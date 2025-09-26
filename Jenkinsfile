@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDS = credentials('dockerhub-credentials') 
         FRONTEND_IMAGE = 'shouryag11/referbridgefrontend:latest'
-        BACKEND_IMAGE = 'sshouryag11/referbridge2:latest'
+        BACKEND_IMAGE = 'shouryag11/referbridge2:latest'
     }
 
     stages {
