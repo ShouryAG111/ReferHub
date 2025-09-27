@@ -12,14 +12,27 @@ app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ extended: true }))
 
 // CORS configuration
+const allowedOrigins = [
+  "http://localhost:3000",                  // local dev
+  "https://referbridge01.azurewebsites.net" // deployed frontend
+];
+
+// ✅ CORS middleware
 app.use(
   cors({
-    origin: (origin, callback) => {
-      callback(null, origin || "*");
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
-    credentials: true,
-  }),
-)
+    credentials: true, // allow cookies / auth headers
+  })
+);
+
+// ✅ Handle preflight requests
+app.options("*", cors());
 
 //logging middleware
 app.use((req, res, next) => {
